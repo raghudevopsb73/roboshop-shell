@@ -1,3 +1,9 @@
+component=cart
+color="\e[36m"
+nocolor="\e[0m"
+log_file="/tmp/roboshop.log"
+app_path="/app"
+
 echo -e "\e[33mConfiguring NodeJS Repos\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash  &>>/tmp/roboshop.log
 
