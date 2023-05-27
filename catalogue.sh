@@ -1,5 +1,5 @@
 component=catalogue
-color="\e[33m"
+color="\e[36m"
 nocolor="\e[0m"
 
 echo -e "${color} Configuring NodeJS Repos ${nocolor}"
