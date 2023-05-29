@@ -6,33 +6,57 @@ app_path="/app"
 app_presetup() {
   echo -e "${color} Add Application User${nocolor}"
   useradd roboshop  &>>$log_file
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 
   echo -e "${color} Create Application Directory ${nocolor}"
   rm -rf /app   &>>$log_file
   mkdir /app
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 
   echo -e "${color} Download Application Content ${nocolor}"
   curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip  &>>$log_file
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 
   echo -e "${color} Extract Application Content${nocolor}"
   cd ${app_path}
   unzip /tmp/$component.zip  &>>$log_file
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 }
 
 systemd_setup() {
   echo -e "${color} Setup SystemD Service  ${nocolor}"
   cp /home/centos/roboshop-shell/$component.service /etc/systemd/system/$component.service  &>>$log_file
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 
   echo -e "${color} Start $component Service ${nocolor}"
   systemctl daemon-reload  &>>$log_file
   systemctl enable $component  &>>$log_file
   systemctl restart $component  &>>$log_file
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 }
 
 nodejs() {
@@ -87,14 +111,22 @@ maven() {
 python() {
   echo -e "${color} Install Python ${nocolor}"
   yum install python36 gcc python3-devel -y &>>/tmp/roboshop.log
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 
   app_presetup
 
   echo -e "${color} Install Application Dependencies ${nocolor}"
   cd /app
   pip3.6 install -r requirements.txt &>>/tmp/roboshop.log
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 
   systemd_setup
 }
