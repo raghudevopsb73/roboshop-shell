@@ -1,5 +1,3 @@
-set -e
-
 source common.sh
 component=payment
 
