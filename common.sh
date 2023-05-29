@@ -77,3 +77,16 @@ maven() {
   systemd_setup
 
 }
+
+python() {
+  echo -e "${color} Install Python ${nocolor}"
+  yum install python36 gcc python3-devel -y &>>/tmp/roboshop.log
+
+  app_presetup
+
+  echo -e "${color} Install Application Dependencies ${nocolor}"
+  cd /app
+  pip3.6 install -r requirements.txt &>>/tmp/roboshop.log
+
+  systemd_setup
+}
