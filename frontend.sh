@@ -1,3 +1,5 @@
+source common.sh
+
 echo -e "${color} Installing Nginx Server ${nocolor}"
 yum install nginx -y &>>/tmp/roboshop.log
 stat_check $?
