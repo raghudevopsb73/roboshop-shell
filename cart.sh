@@ -1,4 +1,4 @@
 source common.sh
-component=${component}
+component=cart
 
 nodejs
